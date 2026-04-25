@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>10 BEST STREETWEAR SHOPS — MELBOURNE</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f0e8;
+      --yellow: #ffe600;
+      --red: #ff2020;
+      --blue: #0033ff;
+      --green: #00ff88;
+      --pink: #ff00cc;
+      --orange: #ff6600;
+      --border: 3px solid var(--black);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--white);
+      color: var(--black);
+      font-family: 'Space Mono', monospace;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ──────────────────────────────────── */
+    .hero {
+      background: var(--black);
+      color: var(--yellow);
+      padding: 60px 32px 48px;
+      border-bottom: 6px solid var(--yellow);
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: clamp(52px, 10vw, 120px);
+      line-height: 0.88;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      color: var(--yellow);
+    }
+
+    .hero h1 span {
+      display: block;
+      color: var(--white);
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--red);
+      -webkit-text-stroke: 2px var(--red);
+    }
+
+    .hero-sub {
+      margin-top: 32px;
+      font-size: 13px;
+      color: #888;
+      letter-spacing: 0.05em;
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      margin-top: 28px;
+      background: var(--yellow);
+      color: var(--black);
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border: var(--border);
+    }
+
+    .hero-num {
+      position: absolute;
+      right: 32px;
+      top: 48px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: clamp(80px, 15vw, 200px);
+      line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 2px #333;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* ── TICKER ─────────────────────────────────── */
+    .ticker {
+      background: var(--red);
+      border-top: 3px solid var(--black);
+      border-bottom: 3px solid var(--black);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 10px 0;
+    }
+
+    .ticker-inner {
+      display: inline-block;
+      animation: ticker 22s linear infinite;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── GRID ───────────────────────────────────── */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-left: var(--border);
+      border-top: var(--border);
+    }
+
+    @media (max-width: 720px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── SHOP CARD ───────────────────────────────── */
+    .card {
+      border-right: var(--border);
+      border-bottom: var(--border);
+      padding: 0;
+      position: relative;
+      background: var(--white);
+      transition: transform 0.08s ease;
+    }
+
+    .card:hover { z-index: 2; transform: translate(-3px, -3px); box-shadow: 6px 6px 0 var(--black); }
+
+    .card-accent {
+      height: 8px;
+    }
+
+    .card-body {
+      padding: 28px 28px 24px;
+    }
+
+    .card-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 72px;
+      line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 2px var(--black);
+      display: block;
+      margin-bottom: 4px;
+      user-select: none;
+    }
+
+    .card-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: clamp(22px, 3.5vw, 32px);
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+
+    .card-desc {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      line-height: 1.75;
+      color: #333;
+      margin-bottom: 24px;
+    }
+
+    .card-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--black);
+      padding: 7px 14px;
+      border: 2px solid var(--black);
+      background: var(--white);
+      transition: background 0.1s, color 0.1s;
+    }
+
+    .btn:hover { background: var(--black); color: var(--white); }
+
+    .btn-site { }
+    .btn-map  { }
+
+    /* accent colours per card */
+    .c1  .card-accent { background: var(--yellow); }
+    .c2  .card-accent { background: var(--red); }
+    .c3  .card-accent { background: var(--blue); }
+    .c4  .card-accent { background: var(--green); }
+    .c5  .card-accent { background: var(--pink); }
+    .c6  .card-accent { background: var(--orange); }
+    .c7  .card-accent { background: var(--yellow); }
+    .c8  .card-accent { background: var(--red); }
+    .c9  .card-accent { background: var(--blue); }
+    .c10 .card-accent { background: var(--green); }
+
+    .c1  .card-number { -webkit-text-stroke-color: var(--yellow); }
+    .c2  .card-number { -webkit-text-stroke-color: var(--red); }
+    .c3  .card-number { -webkit-text-stroke-color: var(--blue); }
+    .c4  .card-number { -webkit-text-stroke-color: var(--green); }
+    .c5  .card-number { -webkit-text-stroke-color: var(--pink); }
+    .c6  .card-number { -webkit-text-stroke-color: var(--orange); }
+    .c7  .card-number { -webkit-text-stroke-color: var(--yellow); }
+    .c8  .card-number { -webkit-text-stroke-color: var(--red); }
+    .c9  .card-number { -webkit-text-stroke-color: var(--blue); }
+    .c10 .card-number { -webkit-text-stroke-color: var(--green); }
+
+    /* full-width last card if odd */
+    .card.wide {
+      grid-column: 1 / -1;
+    }
+
+    .card.wide .card-body {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 0 40px;
+      align-items: start;
+    }
+
+    .card.wide .card-meta {
+      grid-column: 2;
+    }
+
+    @media (max-width: 720px) {
+      .card.wide .card-body { display: block; }
+    }
+
+    /* ── FOOTER ─────────────────────────────────── */
+    footer {
+      background: var(--black);
+      color: #444;
+      padding: 40px 32px;
+      border-top: 6px solid var(--yellow);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      line-height: 2;
+    }
+
+    footer strong { color: var(--yellow); }
+
+    footer a { color: #666; text-decoration: underline; }
+    footer a:hover { color: var(--white); }
+  </style>
+</head>
+<body>
+
+<!-- ── HERO ─────────────────────────────────────────── -->
+<header class="hero">
+  <div class="hero-num">10</div>
+  <p class="hero-eyebrow">/// Melbourne, VIC — Curated 2026</p>
+  <h1>
+    BEST<br>
+    <span>STREET</span>
+    <em>WEAR</em><br>
+    <span>SHOPS</span>
+  </h1>
+  <p class="hero-sub">
+    No hype algorithm. No paid placement. Just the ten spots
+    worth your time in the world's most liveable city.
+    Fitzroy, CBD, Brunswick — all the drip, none of the
+    tourist-trap BS.
+  </p>
+  <div class="hero-tag">↓ Scroll for the list</div>
+</header>
+
+<!-- ── TICKER ────────────────────────────────────────── -->
+<div class="ticker" aria-hidden="true">
+  <span class="ticker-inner">
+    MELBOURNE &nbsp;///&nbsp; STREETWEAR &nbsp;///&nbsp; FITZROY &nbsp;///&nbsp; CBD &nbsp;///&nbsp; FITZROY &nbsp;///&nbsp;
+    SNEAKERS &nbsp;///&nbsp; KICKS &nbsp;///&nbsp; DRIP &nbsp;///&nbsp; MELBOURNE &nbsp;///&nbsp; STREETWEAR &nbsp;///&nbsp; FITZROY &nbsp;///&nbsp; CBD &nbsp;///&nbsp; FITZROY &nbsp;///&nbsp;
+    SNEAKERS &nbsp;///&nbsp; KICKS &nbsp;///&nbsp; DRIP &nbsp;///&nbsp;
+  </span>
+</div>
+
+<!-- ── CARDS ─────────────────────────────────────────── -->
+<main class="grid">
+
+  <!-- 01 -->
+  <article class="card c1">
+    <div class="card-accent"></div>
+    <div class="card-body">
+      <span class="card-number">01</span>
+      <h2 class="card-name">Up There Store</h2>
+      <p class="card-desc">
+        Melbourne's most respected independent. Tucked down
+        Flinders Lane since 2007, Up There stocks the hard-to-find
+        stuff — Norse Projects, Engineered Garments, Kapital,
+        exclusive New Balance collabs — and actually knows what
+        they're selling. No hype, all substance.
+      </p>
+      <div class="card-links">
+        <a class="btn btn-site" href="https://uptherestore.com" target="_blank" rel="noopener">↗ Website</a>
+        <a class="btn btn-map"  href="https://www.google.com/maps/search/69+Flinders+Lane+Melbourne+VIC+3000" target="_blank" rel="noopener">⊕ 69 Flinders Lane, CBD</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- 02 -->
+  <article class="card c2">
+    <div class="card-accent"></div>
+    <div class="card-body">
+      <span class="card-number">02</span>
+      <h2 class="card-name">Culture Kings</h2>
+      <p class="card-desc">
+        Two levels of pure streetwear chaos on Russell Street with
+        a second entrance on iconic Hosier Lane. In-store DJs,
+        floor-to-ceiling drops, and everything from Supreme to
+        Mitchell &amp; Ness. Loud, proud, and unapologetically
+        maximal — exactly how it should be.
+      </p>
+      <div class="card-links">
+        <a class="btn btn-site" href="https://www.culturekings.com.au/pages/melbourne" target="_blank" rel="noopener">↗ Website</a>
+        <a class="btn btn-map"  href="https://www.google.com/maps/search/19-25+Russell+Street+Melbourne+VIC+3000" target="_blank" rel="noopener">⊕ 19–25 Russell St, CBD</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- 03 -->
+  <article class="card c3">
+    <div class="card-accent"></div>
+    <div class="card-body">
+      <span class="card-number">03</span>
+      <h2 class="card-name">Supply Store</h2>
+      <p class="card-desc">
+        Quietly elite. Founded in 2002 and finally bringing its
+        Sydney cred to Melbourne in 2019, Supply stocks Stone
+        Island, Noah, WTAPS, and Death Rites in a space that
+        feels like a gallery more than a shop. For the
+        discerning collector, not the hype-chaser.
+      </p>
+      <div class="card-links">
+        <a class="btn btn-site" href="https://supplystore.com.au" target="_blank" rel="noopener">↗ Website</a>
+        <a class="btn btn-map"  href="https://www.google.com/maps/search/29A+Sutherland+Street+Melbourne+VIC+3000" target="_blank" rel="noopener">⊕ 29A Sutherland St, CBD</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- 04 -->
+  <article class="card c4">
+    <div class="card-accent"></div>
+    <div class="card-body">
+      <span class="card-number">04</span>
+      <h2 class="card-name">HAVN</h2>
+      <p class="card-desc">
+        Gertrude Street institution. What started as a small
+        Fitzroy boutique has become a gallery-like 200sqm space
+        showcasing Lemaire, Mfpen, Orslow, and Andersen-Andersen.
+        Function and aesthetics at every price point. Come for
+        the clothes, stay for the architecture.
+      </p>
+      <div class="card-links">
+        <a class="btn btn-site" href="https://havnstore.com" target="_blank" rel="noopener">↗ Website</a>
+        <a class="btn btn-map"  href="https://www.google.com/maps/search/200+Gertrude+Street+Fitzroy+VIC+3065" target="_blank" rel="noopener">⊕ 200 Gertrude St, Fitzroy</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- 05 -->
+  <article class="card c5">
+    <div class="card-accent"></div>
+    <div class="card-body">
+      <span class="card-number">05</span>
+      <h2 class="card-name">The Sure Store</h2>
+      <p class="card-desc">
+        Melbourne's home of Good Stuff. Skateboard decks,
+        deadstock sneakers, The Hundreds, Raised By Wolves,
+        For The Homies — all crammed into a Little Lonsdale
+        space that rewards the dig. One of those stores where
+        you walk in for one thing and leave with four.
+      </p>
+      <div class="card-links">
+        <a class="btn btn-site" href="https://thesurestore.com" target="_blank" rel="noopener">↗ Website</a>
+        <a class="btn btn-map"  href="https://www.google.com/maps/search/273+Little+Lonsdale+Street+Melbourne+VIC+3000" target="_blank" rel="noopener">⊕ 273 Little Lonsdale St, CBD</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- 06 -->
+  <article class="card c6">
+    <div class="card-accent"></div>
+    <div class="card-body">
+      <span class="card-number">06</span>
+      <h2 class="card-name">Hemley Store</h2>
+      <p class="card-desc">
+        Family-owned and fiercely independent on Brunswick Street,
+        Fitzroy. Hemley curates contemporary streetwear and
+        lifestyle brands with a sharp editorial eye — think Afends,
+        Nike SB, and cult Australian labels alongside global names.
+        Neighbourhood energy, global taste.
+      </p>
+      <div class="card-links">
+        <a class="btn btn-site" href="https://hemley.com.au" target="_blank" rel="noopener">↗ Website</a>
+        <a class="btn btn-map"  href="https://www.google.com/maps/search/257-259+Brunswick+Street+Fitzroy+VIC+3065" target="_blank" rel="noopener">⊕ 257–259 Brunswick St, Fitzroy</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- 07 -->
+  <article class="card c7">
+    <div class="card-accent"></div>
+    <div class="card-body">
+      <span class="card-number">07</span>
+      <h2 class="card-name">KICKSTW</h2>
+      <p class="card-desc">
+        Australia's premier hype sneaker marketplace, hiding in
+        plain sight inside the Royal Arcade. Air Jordan, Yeezy,
+        Bape, KAWS, Bearbrick, Travis Scott collabs — 100%
+        authenticated. Started online in 2013, now the
+        physical destination for Melbourne's sneakerheads.
+      </p>
+      <div class="card-links">
+        <a class="btn btn-site" href="https://kickstw.com.au" target="_blank" rel="noopener">↗ Website</a>
+        <a class="btn btn-map"  href="https://www.google.com/maps/search/314+Little+Collins+Street+Level+2+Royal+Arcade+Melbourne+VIC+3000" target="_blank" rel="noopener">⊕ Royal Arcade, Lvl 2, 314 Little Collins St</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- 08 -->
+  <article class="card c8">
+    <div class="card-accent"></div>
+    <div class="card-body">
+      <span class="card-number">08</span>
+      <h2 class="card-name">FAT</h2>
+      <p class="card-desc">
+        Melbourne streetwear royalty since 1998. FAT pioneered
+        the city's boutique scene before boutique was even a
+        word people used. Russell Place locals find a sharp
+        edit of skate-adjacent and contemporary labels —
+        grown-up streetwear for people who were there
+        at the beginning.
+      </p>
+      <div class="card-links">
+        <a class="btn btn-site" href="https://fat4.com" target="_blank" rel="noopener">↗ Website</a>
+        <a class="btn btn-map"  href="https://www.google.com/maps/search/Shop+G3+Russell+Place+Melbourne+VIC+3000" target="_blank" rel="noopener">⊕ Shop G3, Russell Place, CBD</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- 09 -->
+  <article class="card c9">
+    <div class="card-accent"></div>
+    <div class="card-body">
+      <span class="card-number">09</span>
+      <h2 class="card-name">General Pants Co.</h2>
+      <p class="card-desc">
+        The gateway drug. Nobody's most obscure pick, but
+        General Pants earns its place for bringing Dickies,
+        Stüssy, Carhartt WIP, and Vans to the masses with
+        actual floor staff who give a damn. The Melbourne
+        Central flagship is the biggest and best version
+        of the chain — use it as intended.
+      </p>
+      <div class="card-links">
+        <a class="btn btn-site" href="https://www.generalpants.com" target="_blank" rel="noopener">↗ Website</a>
+        <a class="btn btn-map"  href="https://www.google.com/maps/search/211+La+Trobe+Street+Melbourne+Central+VIC+3000" target="_blank" rel="noopener">⊕ Melbourne Central, 211 La Trobe St</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- 10 — wide -->
+  <article class="card c10">
+    <div class="card-accent"></div>
+    <div class="card-body">
+      <span class="card-number">10</span>
+      <h2 class="card-name">Platypus Shoes</h2>
+      <p class="card-desc">
+        Don't sleep on Platypus. With multiple Melbourne
+        locations — Swanston Street, Melbourne Central,
+        Chapel Street — it's the most accessible place to
+        cop Jordans, Dunks, New Balance, and Salehe Bembury
+        collabs without paying a resale tax. The Swanston
+        Street store is the flagship: big range, regular
+        drops, always in-hand stock that resellers
+        couldn't snag.
+      </p>
+      <div class="card-links">
+        <a class="btn btn-site" href="https://www.platypusshoes.com.au" target="_blank" rel="noopener">↗ Website</a>
+        <a class="btn btn-map"  href="https://www.google.com/maps/search/149+Swanston+Street+Melbourne+VIC+3000" target="_blank" rel="noopener">⊕ 149–151 Swanston St, CBD</a>
+      </div>
+    </div>
+  </article>
+
+</main>
+
+<!-- ── FOOTER ─────────────────────────────────────────── -->
+<footer>
+  <strong>/// MELBOURNE STREETWEAR — 2025 GUIDE</strong><br>
+  Addresses and hours change. Always verify before you trek across town.<br>
+  Sources:
+  <a href="https://uptherestore.com" target="_blank" rel="noopener">uptherestore.com</a> ·
+  <a href="https://www.culturekings.com.au" target="_blank" rel="noopener">culturekings.com.au</a> ·
+  <a href="https://supplystore.com.au" target="_blank" rel="noopener">supplystore.com.au</a> ·
+  <a href="https://havnstore.com" target="_blank" rel="noopener">havnstore.com</a> ·
+  <a href="https://thesurestore.com" target="_blank" rel="noopener">thesurestore.com</a> ·
+  <a href="https://hemley.com.au" target="_blank" rel="noopener">hemley.com.au</a> ·
+  <a href="https://kickstw.com.au" target="_blank" rel="noopener">kickstw.com.au</a> ·
+  <a href="https://fat4.com" target="_blank" rel="noopener">fat4.com</a> ·
+  <a href="https://www.generalpants.com" target="_blank" rel="noopener">generalpants.com</a> ·
+  <a href="https://www.platypusshoes.com.au" target="_blank" rel="noopener">platypusshoes.com.au</a>
+</footer>
+
+</body>
+</html>
