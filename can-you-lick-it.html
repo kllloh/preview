@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Can You Lick It? — The Periodic Table of Lickability</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#06080f;
+  --bg2:#0c1018;
+  --bg3:#131820;
+  --green:#00e676;
+  --green-bg:rgba(0,230,118,0.1);
+  --green-glow:rgba(0,230,118,0.35);
+  --amber:#ffb300;
+  --amber-bg:rgba(255,179,0,0.1);
+  --amber-glow:rgba(255,179,0,0.35);
+  --red:#ff1744;
+  --red-bg:rgba(255,23,68,0.1);
+  --red-glow:rgba(255,23,68,0.35);
+  --text:#e8eaf6;
+  --text2:#9fa8c0;
+  --cell:54px;
+  --gap:3px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh;overflow-x:hidden}
+
+/* noise texture overlay */
+body::before{content:'';position:fixed;inset:0;opacity:0.025;pointer-events:none;z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:200px;
+}
+
+header{position:relative;z-index:1;text-align:center;padding:2.5rem 1rem 1.5rem;
+  background:linear-gradient(180deg,rgba(255,23,68,0.04) 0%,transparent 100%);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.title-line{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,6rem);
+  letter-spacing:0.04em;line-height:0.9;
+  background:linear-gradient(135deg,#ff6b6b 0%,#ffd93d 40%,#6bcb77 80%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.subtitle{font-family:'Barlow Condensed',sans-serif;font-size:1rem;letter-spacing:0.3em;
+  text-transform:uppercase;color:var(--text2);margin-top:0.3rem;
+}
+
+.legend{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin-top:1.2rem;padding:0.8rem 1rem;
+  background:var(--bg2);border:1px solid rgba(255,255,255,0.06);border-radius:8px;
+  display:inline-flex;
+}
+.leg{display:flex;align-items:center;gap:8px;font-family:'Barlow Condensed',sans-serif;font-size:0.9rem;letter-spacing:0.05em;font-weight:600}
+.leg-dot{width:14px;height:14px;border-radius:3px;flex-shrink:0}
+.leg-g .leg-dot{background:var(--green);box-shadow:0 0 8px var(--green-glow)}
+.leg-y .leg-dot{background:var(--amber);box-shadow:0 0 8px var(--amber-glow)}
+.leg-r .leg-dot{background:var(--red);box-shadow:0 0 8px var(--red-glow)}
+.leg-g{color:var(--green)}
+.leg-y{color:var(--amber)}
+.leg-r{color:var(--red)}
+.legend-wrap{display:flex;justify-content:center;margin-top:1rem}
+
+/* PERIODIC TABLE */
+.pt-outer{overflow-x:auto;padding:1.5rem 1rem 0.5rem;position:relative;z-index:1}
+.pt-grid{
+  display:grid;
+  grid-template-columns:repeat(18,var(--cell));
+  grid-template-rows:repeat(10,var(--cell));
+  gap:var(--gap);
+  width:calc(18*var(--cell) + 17*var(--gap));
+  margin:0 auto;
+}
+
+.el{
+  grid-column:var(--gc);
+  grid-row:var(--gr);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  border-radius:4px;
+  border:1px solid rgba(255,255,255,0.06);
+  background:var(--bg3);
+  cursor:pointer;
+  transition:transform 0.12s ease,box-shadow 0.12s ease,border-color 0.12s ease;
+  position:relative;
+  overflow:hidden;
+  user-select:none;
+}
+.el::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity 0.15s}
+.el:hover{transform:scale(1.18);z-index:10}
+
+/* category colours */
+.el.g{background:var(--green-bg);border-color:rgba(0,230,118,0.3)}
+.el.g::before{background:radial-gradient(circle at center,var(--green-glow),transparent 70%)}
+.el.g:hover{border-color:var(--green);box-shadow:0 0 18px var(--green-glow),0 0 40px rgba(0,230,118,0.15)}
+.el.g:hover::before{opacity:1}
+
+.el.y{background:var(--amber-bg);border-color:rgba(255,179,0,0.3)}
+.el.y::before{background:radial-gradient(circle at center,var(--amber-glow),transparent 70%)}
+.el.y:hover{border-color:var(--amber);box-shadow:0 0 18px var(--amber-glow),0 0 40px rgba(255,179,0,0.15)}
+.el.y:hover::before{opacity:1}
+
+.el.r{background:var(--red-bg);border-color:rgba(255,23,68,0.3)}
+.el.r::before{background:radial-gradient(circle at center,var(--red-glow),transparent 70%)}
+.el.r:hover{border-color:var(--red);box-shadow:0 0 18px var(--red-glow),0 0 40px rgba(255,23,68,0.15)}
+.el.r:hover::before{opacity:1}
+
+.el-num{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:400;
+  color:rgba(255,255,255,0.35);position:absolute;top:3px;left:5px;line-height:1}
+.el-sym{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;line-height:1;
+  color:var(--text);z-index:1}
+.el.g .el-sym{color:#a5f3c8}
+.el.y .el-sym{color:#ffd280}
+.el.r .el-sym{color:#ff8a9a}
+.el-name{font-family:'Barlow Condensed',sans-serif;font-size:7.5px;
+  color:rgba(255,255,255,0.4);z-index:1;letter-spacing:0.02em;
+  max-width:52px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}
+
+/* spacer row label */
+.pt-label{
+  grid-column:1/3;
+  display:flex;align-items:center;justify-content:flex-end;padding-right:6px;
+  font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:0.1em;
+  text-transform:uppercase;color:rgba(255,255,255,0.2);
+}
+.pt-break{
+  grid-column:1/19;
+  grid-row:8;
+  height:calc(var(--cell)*0.4);
+}
+
+/* TOOLTIP */
+#tooltip{
+  position:fixed;bottom:-200px;left:50%;transform:translateX(-50%);
+  width:min(480px,calc(100vw - 2rem));
+  background:var(--bg2);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:10px;
+  padding:1.2rem 1.5rem;
+  z-index:1000;
+  transition:bottom 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  pointer-events:none;
+  backdrop-filter:blur(20px);
+}
+#tooltip.show{bottom:1.5rem}
+#tooltip.g{border-color:rgba(0,230,118,0.4);box-shadow:0 8px 40px rgba(0,230,118,0.2)}
+#tooltip.y{border-color:rgba(255,179,0,0.4);box-shadow:0 8px 40px rgba(255,179,0,0.2)}
+#tooltip.r{border-color:rgba(255,23,68,0.4);box-shadow:0 8px 40px rgba(255,23,68,0.2)}
+.tt-top{display:flex;align-items:flex-start;gap:1.2rem}
+.tt-big{font-family:'Bebas Neue',sans-serif;font-size:4rem;line-height:1;flex-shrink:0}
+.g .tt-big{color:var(--green)}
+.y .tt-big{color:var(--amber)}
+.r .tt-big{color:var(--red)}
+.tt-meta{flex:1}
+.tt-name{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:600;color:var(--text);letter-spacing:0.04em}
+.tt-num{font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;color:var(--text2);letter-spacing:0.1em;text-transform:uppercase;margin-top:2px}
+.tt-verdict{display:inline-flex;align-items:center;gap:6px;margin-top:8px;
+  padding:4px 10px;border-radius:4px;
+  font-family:'Barlow Condensed',sans-serif;font-size:0.85rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase}
+.g .tt-verdict{background:var(--green-bg);color:var(--green);border:1px solid rgba(0,230,118,0.3)}
+.y .tt-verdict{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(255,179,0,0.3)}
+.r .tt-verdict{background:var(--red-bg);color:var(--red);border:1px solid rgba(255,23,68,0.3)}
+.tt-text{margin-top:0.8rem;font-size:0.92rem;line-height:1.5;color:var(--text2)}
+
+footer{text-align:center;padding:1.5rem;border-top:1px solid rgba(255,255,255,0.05);
+  font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:0.12em;
+  text-transform:uppercase;color:rgba(255,255,255,0.2);margin-top:1rem;position:relative;z-index:1;
+}
+
+@media(max-width:700px){
+  :root{--cell:36px;--gap:2px}
+  .el-sym{font-size:1rem}
+  .el-num{font-size:7px}
+  .el-name{display:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="title-line">Can You Lick It?</div>
+  <div class="subtitle">The Periodic Table of Lickability</div>
+  <div class="legend-wrap">
+    <div class="legend">
+      <div class="leg leg-g"><div class="leg-dot"></div> ✓ YES — LICK AWAY</div>
+      <div class="leg leg-y"><div class="leg-dot"></div> ⚠ I WOULDN'T</div>
+      <div class="leg leg-r"><div class="leg-dot"></div> ☠ NO — YOU'RE DEAD</div>
+    </div>
+  </div>
+</header>
+
+<div class="pt-outer">
+  <div class="pt-grid" id="ptgrid"></div>
+</div>
+
+<div id="tooltip">
+  <div class="tt-top">
+    <div class="tt-big" id="tt-sym">He</div>
+    <div class="tt-meta">
+      <div class="tt-name" id="tt-name">Helium</div>
+      <div class="tt-num" id="tt-num">Element #2</div>
+      <div class="tt-verdict" id="tt-verdict">✓ YES — Lick It</div>
+    </div>
+  </div>
+  <div class="tt-text" id="tt-text">Inert noble gas. Nothing happens.</div>
+</div>
+
+<footer>hover or tap any element for your licking verdict &nbsp;·&nbsp; for educational purposes only &nbsp;·&nbsp; please do not actually lick any elements</footer>
+
+<script>
+// cat: 0=green(lick it), 1=yellow(I wouldn't), 2=red(you're dead)
+// [n, sym, name, cat, col, row, txt]
+const ELEMENTS = [
+ [1,'H','Hydrogen',1,1,1,"Explosive gas. Can't really lick a gas, but if you somehow compressed it — highly flammable, your face is the spark."],
+ [2,'He','Helium',0,18,1,"Completely inert. Can't lick a gas, but helium is utterly harmless. Your voice would go funny if you inhaled it though."],
+ [3,'Li','Lithium',2,1,2,"Reacts slowly with moisture. Your tongue IS moisture. You'd get a chemical burn and a tingly battery taste. No thanks."],
+ [4,'Be','Beryllium',2,2,2,"Powdered beryllium causes berylliosis — an incurable, progressive lung disease. Even one lick introduces toxic dust. Hard no."],
+ [5,'B','Boron',1,13,2,"Mildly toxic in large quantities. A single lick won't kill you but offers no reward whatsoever. Chalky, pointless."],
+ [6,'C','Carbon',0,14,2,"Charcoal, graphite, diamond — all carbon. Non-toxic. Activated charcoal is literally used as medicine. Crunchy but safe."],
+ [7,'N','Nitrogen',0,15,2,"You're breathing it right now. 78% of the air you inhale is nitrogen. You are constantly licking nitrogen."],
+ [8,'O','Oxygen',0,16,2,"You are doing this right now. It's called breathing. Oxygen: the original lickable element."],
+ [9,'F','Fluorine',2,17,2,"The most reactive element on the periodic table. Would begin dissolving your face before your tongue made contact. Absolute obliteration."],
+ [10,'Ne','Neon',0,18,2,"Completely inert. Neon does nothing. Zero. Not even a smell. Your tongue would feel exactly as it does right now."],
+ [11,'Na','Sodium',2,1,3,"Pure sodium metal reacts VIOLENTLY with water. Your mouth is mostly water. This ends with fire, explosion, and a missing face."],
+ [12,'Mg','Magnesium',1,2,3,"Burns at 3,100°C if ignited. Won't spontaneously ignite from licking but reacts with acids (like stomach acid). Moderately unwise."],
+ [13,'Al','Aluminium',1,13,3,"Aluminium foil is everywhere. The pure metal is low toxicity. Metallic taste, slight irritation. You'd survive this one."],
+ [14,'Si','Silicon',1,14,3,"Silica gel packets say 'Do Not Eat' — but it's largely non-toxic. Gritty, tasteless, pointless. Like licking sand."],
+ [15,'P','Phosphorus',2,15,3,"White phosphorus spontaneously ignites in air and is acutely toxic. Red phosphorus is less reactive but still poisonous. Both: absolutely not."],
+ [16,'S','Sulfur',1,16,3,"Low toxicity. Smells and tastes like rotten eggs. You would survive a lick of brimstone but you'd wish you hadn't."],
+ [17,'Cl','Chlorine',2,17,3,"Toxic gas weaponised in World War I. Causes pulmonary oedema and chemical burns. Why are you even considering this."],
+ [18,'Ar','Argon',0,18,3,"Inert. 1% of every breath you take. Completely harmless. Go ahead. Nothing will happen and that's exactly the point."],
+ [19,'K','Potassium',2,1,4,"Reacts MORE violently with water than sodium. Your mouth is a water environment. This produces hydrogen gas and explodes. Goodbye tongue."],
+ [20,'Ca','Calcium',1,2,4,"Pure calcium metal reacts with moisture and is irritating. Calcium carbonate (chalk) is fine though. Split verdict: pure metal = bad idea."],
+ [21,'Sc','Scandium',1,3,4,"Rare earth metal. Low acute toxicity. No one in recorded history has wanted to lick scandium. You could be first. Metallic taste."],
+ [22,'Ti','Titanium',1,4,4,"Actually biocompatible — used in surgical implants and dental crowns. Low toxicity. Metallic taste, but titanium won't hurt you. Closest to a yellow YES."],
+ [23,'V','Vanadium',1,5,4,"Vanadium compounds are mildly toxic. Repeated exposure is harmful. One experimental lick? You'd probably survive but gain nothing."],
+ [24,'Cr','Chromium',1,6,4,"Chromium-3 is an essential trace element. Chromium-6 is a carcinogen (the Erin Brockovich element). The metal itself? A dice roll. Don't."],
+ [25,'Mn','Manganese',1,7,4,"Essential trace element. The metal is mildly toxic. Too much causes manganism — a Parkinson's-like neurological condition. Metallic. Don't make it a habit."],
+ [26,'Fe','Iron',1,8,4,"Iron! Essential mineral. Tastes like blood (blood tastes like iron). You've almost certainly tasted iron before. You'll live."],
+ [27,'Co','Cobalt',1,9,4,"Cobalt blue pigment. Essential in B12. Slightly toxic with prolonged exposure. One lick isn't great but won't hospitalise you. Still — why?"],
+ [28,'Ni','Nickel',1,10,4,"Nickel causes contact dermatitis in many people. Licking it would likely cause an unpleasant reaction on your tongue. Metallic, bad idea."],
+ [29,'Cu','Copper',1,11,4,"Essential trace element! Copper pipes, pennies. Tastes like metal and blood. Nausea in large doses. A lick? Survivable. Disgusting, but survivable."],
+ [30,'Zn','Zinc',1,12,4,"Zinc lozenges are actual cold medicine. Essential mineral. Metallic taste. You'd be fine. This is probably the best yellow element to lick."],
+ [31,'Ga','Gallium',1,13,4,"Melts in your hand at 29.8°C. Non-toxic. Liquid gallium on your tongue would be the strangest experience of your life. Weird but safe-ish."],
+ [32,'Ge','Germanium',1,14,4,"Semiconductor element. Low acute toxicity. Tastes like nothing interesting. No benefit, no real harm from a one-off lick. Pointless."],
+ [33,'As','Arsenic',2,15,4,"ARSENIC. The original murder weapon. Odourless, tasteless, and lethal. Victorians used it in wallpaper. The perfect poison. Absolute no."],
+ [34,'Se','Selenium',1,16,4,"Essential trace element — but the margin between beneficial and toxic is terrifyingly thin. A lick could go either way. Don't tempt fate."],
+ [35,'Br','Bromine',2,17,4,"A corrosive red-brown liquid that fumes at room temperature. Contact with skin causes chemical burns. Your tongue would simply cease to exist."],
+ [36,'Kr','Krypton',0,18,4,"Inert noble gas. Not the Superman kind. Does absolutely nothing. You cannot harm yourself by licking krypton."],
+ [37,'Rb','Rubidium',2,1,5,"Ignites spontaneously in air. Explodes on contact with water. Your mouth is water. Explosion, then chemical burns, then a very bad day."],
+ [38,'Sr','Strontium',1,2,5,"Mildly toxic. Reacts slowly with water. Not the scary kind (that's radioactive Sr-90). The stable metal would cause irritation. Inadvisable."],
+ [39,'Y','Yttrium',1,3,5,"Yttrium. Low toxicity, used in lasers and superconductors. Would taste metallic and unusual. You'd live to regret the taste, if not the lick."],
+ [40,'Zr','Zirconium',1,4,5,"Biocompatible! Used in dental crowns and prosthetics. Very low acute toxicity. Of all the I-wouldn't elements, this is the most forgettable lick."],
+ [41,'Nb','Niobium',1,5,5,"Niobium is used in body jewellery because it's hypoallergenic. Very low toxicity. An expensive, completely unrewarding metallic lick."],
+ [42,'Mo','Molybdenum',1,6,5,"Essential cofactor in enzymes. Very low acute toxicity. The most boring element to lick. Metallic. Nothing happens."],
+ [43,'Tc','Technetium',2,7,5,"The only element with NO stable isotopes — every form is radioactive. Would irradiate you from inside your tongue. Slow, invisible death."],
+ [44,'Ru','Ruthenium',1,8,5,"Some ruthenium compounds are toxic, but the metal itself has low acute toxicity. Inadvisable but probably survivable."],
+ [45,'Rh','Rhodium',1,9,5,"Rhodium plating! One of the most expensive metals on Earth. Low toxicity. You'd be licking something worth more than gold. And tasting nothing."],
+ [46,'Pd','Palladium',1,10,5,"Low acute toxicity. Some people are allergic. Used in catalytic converters and jewellery. Survive the lick, regret the decision."],
+ [47,'Ag','Silver',1,11,5,"Silver leaf is used in food decoration! Edible silver exists. However, regular exposure causes argyria — your skin turns permanently blue. One lick though? Fine."],
+ [48,'Cd','Cadmium',2,12,5,"Highly toxic heavy metal and carcinogen. Causes itai-itai disease — painful bone fractures and kidney failure. An extremely clear no."],
+ [49,'In','Indium',1,13,5,"Mildly toxic with chronic exposure. One lick? Probably fine. Used in touchscreens. Soft, metallic, and completely unrewarding."],
+ [50,'Sn','Tin',1,14,5,"Tin cans are lined with it! Low acute toxicity. The metallic taste of tin is ancient and familiar. You'd be fine for one lick."],
+ [51,'Sb','Antimony',2,15,5,"Antimony has been used in medicines historically but is moderately toxic. Causes nausea, vomiting, and cardiac issues. Not worth the risk."],
+ [52,'Te','Tellurium',1,16,5,"Here's the thing about tellurium: your breath and sweat will smell like garlic for WEEKS after even tiny exposure. You can't lick this without consequences."],
+ [53,'I','Iodine',1,17,5,"Essential trace element! Iodised salt exists. Used as antiseptic on wounds. Concentrated iodine is toxic but a tiny lick? You might survive. Tastes terrible."],
+ [54,'Xe','Xenon',0,18,5,"Inert noble gas. Used as an anaesthetic. Completely harmless. If you could lick it, you might feel slightly calm and heavy. Otherwise: nothing."],
+ [55,'Cs','Caesium',2,1,6,"The most reactive alkali metal. Ignites spontaneously in air. Explodes violently in water. Your mouth is the water. This is a fireball scenario."],
+ [56,'Ba','Barium',2,2,6,"Barium metal is toxic and reacts violently with water. Barium sulfate (for X-rays) is safe — the pure metal absolutely is not. Chemical burns and poisoning."],
+ [57,'La','Lanthanum',1,3,6,"Lanthanum. Rare earth metal. Low acute toxicity. Used in camera lenses. Would taste of absolutely nothing interesting and cause mild irritation at most."],
+ [72,'Hf','Hafnium',1,4,6,"Hafnium. Low toxicity. Used in nuclear reactor control rods. Metallic, boring, survivable. You wouldn't even know you'd done it."],
+ [73,'Ta','Tantalum',1,5,6,"Biocompatible — used in surgical implants and capacitors. Very low acute toxicity. Arguably the safest metal lick in this yellow column."],
+ [74,'W','Tungsten',1,6,6,"Tungsten! Hardest natural metal. Very low acute toxicity. Your tongue would be fine but your dignity wouldn't survive telling people you licked tungsten."],
+ [75,'Re','Rhenium',1,7,6,"One of the rarest and most expensive elements. Low acute toxicity. An extremely costly lick that accomplishes nothing. Metallic. Forgettable."],
+ [76,'Os','Osmium',2,8,6,"OSMIUM. Oxidises to osmium tetroxide: a compound so toxic it destroys your eyes, lungs, and skin on contact. The metal itself oxidises at room temperature. No."],
+ [77,'Ir','Iridium',1,9,6,"Iridium. Extremely dense, low toxicity. Used in fountain pen nibs and spark plugs. You'd survive this lick. It would be meaningless."],
+ [78,'Pt','Platinum',1,10,6,"Platinum! Low toxicity. Used in jewellery and catalytic converters. The most expensive metallic taste in existence. You'd be fine and completely unimpressed."],
+ [79,'Au','Gold',0,11,6,"GOLD! Edible gold leaf (E175) is literally used in restaurants and chocolatiers. 24-karat gold is chemically inert. You can absolutely lick gold. It tastes of nothing."],
+ [80,'Hg','Mercury',2,12,6,"MERCURY. Liquid metal neurotoxin. Causes tremors, personality changes, and organ failure. The Mad Hatter was real — mercury was used in hat-making. Do not lick."],
+ [81,'Tl','Thallium',2,13,6,"THALLIUM. Tasteless, odourless, and soluble. Used in spy assassinations because it's undetectable. Causes hair loss, then nerve damage, then death. No."],
+ [82,'Pb','Lead',2,14,6,"LEAD. Poisoned the Roman Empire through their water pipes (plumbum = lead = plumbing). Causes irreversible brain damage. The original silent killer. No."],
+ [83,'Bi','Bismuth',1,15,6,"BISMUTH! Active ingredient in Pepto-Bismol. One of the least toxic heavy metals. Forms beautiful rainbow crystals. This is probably the best heavy metal to lick."],
+ [84,'Po','Polonium',2,16,6,"POLONIUM-210. 250,000 times more toxic than hydrogen cyanide by mass. Killed Alexander Litvinenko with a microgram. Radiates from inside your cells. Absolutely not."],
+ [85,'At','Astatine',2,17,6,"Astatine. Radioactive halogen so rare that less than 30g exists on Earth at any one time. Also lethal. A once-in-a-species-lifetime bad idea."],
+ [86,'Rn','Radon',2,18,6,"RADON. Radioactive gas. Seeps into basements from the ground. Second leading cause of lung cancer. Can't lick a gas — but it would still irradiate your mouth."],
+ [87,'Fr','Francium',2,1,7,"FRANCIUM. Radioactive AND the most reactive alkali metal known. Would explode on contact with moisture AND irradiate you. The worst element on the table."],
+ [88,'Ra','Radium',2,2,7,"RADIUM. Killed Marie Curie. Radium dial painters were told to point their brushes with their lips and died of bone cancer. A historically notorious death."],
+ [89,'Ac','Actinium',2,3,7,"Actinium. 150 times more radioactive than radium. A speck would begin destroying your cells immediately. Handled only with robotic arms behind lead glass."],
+ [104,'Rf','Rutherfordium',2,4,7,"Synthetic element. Half-life: 65 seconds. Would irradiate you and decay before you tasted anything. Also nothing exists to lick. Theoretical death."],
+ [105,'Db','Dubnium',2,5,7,"Synthetic element. Half-life: 28 hours. Made in atom smashers, one atom at a time. You will never find enough to lick. Hypothetically lethal anyway."],
+ [106,'Sg','Seaborgium',2,6,7,"Synthetic. Half-life: 2 minutes. Named after Glenn Seaborg who would be horrified. Doesn't exist in lickable quantities. Radioactive oblivion."],
+ [107,'Bh','Bohrium',2,7,7,"Synthetic. Half-life: 17 seconds. Named after Niels Bohr. You'd be dead before you finished saying 'bohrium'. Radiation. Decay. Death."],
+ [108,'Hs','Hassium',2,8,7,"Synthetic. Half-life: 9 seconds. Only a few atoms have ever been made. Cannot be licked. Would kill you if it could. Radioactive."],
+ [109,'Mt','Meitnerium',2,9,7,"Synthetic. Named after Lise Meitner. Half-life: 7 seconds. Entirely theoretical lick. Entirely theoretical death. Don't bother."],
+ [110,'Ds','Darmstadtium',2,10,7,"Synthetic. Half-life: 11 seconds. Made at GSI in Darmstadt. A few atoms. None of them are going near anyone's tongue. Radioactive."],
+ [111,'Rg','Roentgenium',2,11,7,"Synthetic. Half-life: 26 seconds. Named after Röntgen (X-rays). Appropriate that an element named after radiation is pure radioactive death."],
+ [112,'Cn','Copernicium',2,12,7,"Synthetic. Half-life: 29 seconds. Would probably be a gas at room temperature. The first gaseous element in the table. Also radioactive. Also lethal."],
+ [113,'Nh','Nihonium',2,13,7,"Synthetic. First element discovered in Asia (Japan). Half-life: 20 seconds. A proud achievement. Still absolutely lethal. Do not lick."],
+ [114,'Fl','Flerovium',2,14,7,"Synthetic. Half-life: 2.1 seconds. Might be a noble-gas-like solid. Named after Flerov Laboratory. Still radioactive. Still a terrible idea."],
+ [115,'Mc','Moscovium',2,15,7,"Synthetic. Half-life: 220 milliseconds. You could not physically lick something that decays in 0.22 seconds. Hypothetically: extreme radiation."],
+ [116,'Lv','Livermorium',2,16,7,"Synthetic. Half-life: 53 milliseconds. Decays before you blink. The concept of licking this element is philosophically impossible and physically lethal."],
+ [117,'Ts','Tennessine',2,17,7,"Synthetic. Half-life: 51 milliseconds. Doesn't exist long enough to lick. Named after Tennessee. Tennessee deserves better than this."],
+ [118,'Og','Oganesson',2,18,7,"Synthetic. Half-life: 0.89 milliseconds. Less than a millisecond. Even if you could lick it, you couldn't. And if you could, you'd die. Probably."],
+
+ // LANTHANIDES row 9
+ [57,'La','Lanthanum',1,3,9,"Rare earth metal used in camera lenses and batteries. Low acute toxicity. Mild irritant. A thoroughly unremarkable lick with mildly bad consequences."],
+ [58,'Ce','Cerium',1,4,9,"Ignites if scratched or struck (it's in lighters). Mildly toxic. A lick that could turn into a surprise fire. Not recommended."],
+ [59,'Pr','Praseodymium',1,5,9,"Rare earth used in magnets and aircraft engines. Low acute toxicity. The most purple element taste that doesn't exist. Survivable but pointless."],
+ [60,'Nd','Neodymium',1,6,9,"Used in the strongest magnets on Earth. Low acute toxicity. Your fillings might feel weird. Metallic, strange, survivable."],
+ [61,'Pm','Promethium',2,7,9,"The only lanthanide with NO stable isotopes. Entirely radioactive. Used in nuclear batteries. Would irradiate your tongue and slowly cause cancer."],
+ [62,'Sm','Samarium',1,8,9,"Used in samarium-cobalt magnets. Mildly toxic. Low acute risk from one lick. Metallic. Named after a Russian mining official. Forgettable."],
+ [63,'Eu','Europium',1,9,9,"Used in Euro banknote fluorescent security printing. Low toxicity. You're already touching europium every time you handle paper currency."],
+ [64,'Gd','Gadolinium',1,10,9,"Used in MRI contrast agents! Gadolinium is literally injected into people for medical imaging. Low toxicity. Probably the safest lanthanide lick."],
+ [65,'Tb','Terbium',1,11,9,"Used in green phosphors in screens. Mildly toxic. Low acute risk. Metallic. You're probably surrounded by terbium in your devices right now."],
+ [66,'Dy','Dysprosium',1,12,9,"Used in electric vehicle motors and wind turbines. Low acute toxicity. Metallic taste. Survivable. Named for 'difficult to get' in Greek. Fitting."],
+ [67,'Ho','Holmium',1,13,9,"Has the highest magnetic moment of any naturally occurring element. Low toxicity. Used in nuclear reactors. A metallic lick with no consequences."],
+ [68,'Er','Erbium',1,14,9,"Used in fibre optic amplifiers and pink glass. Low acute toxicity. Would taste of absolutely nothing and look beautiful doing it. Survivable."],
+ [69,'Tm','Thulium',1,15,9,"Rarest stable lanthanide. Used in portable X-ray machines. Low acute toxicity. An extraordinarily rare metallic lick. Survivable. Extremely exclusive."],
+ [70,'Yb','Ytterbium',1,16,9,"Used in atomic clocks and lasers. Low acute toxicity. Named after Ytterby, a village in Sweden that has given its name to four elements."],
+ [71,'Lu','Lutetium',1,17,9,"Last lanthanide. Low toxicity, used in cancer treatment. Named after Paris (Lutetia). A medicinal element. Marginally less inadvisable than its neighbours."],
+
+ // ACTINIDES row 10
+ [89,'Ac','Actinium',2,3,10,"150 times more radioactive than radium. Actinium glows blue in the dark from its own radiation. Beautiful. Lethal. Do not lick."],
+ [90,'Th','Thorium',2,4,10,"Radioactive. Found in gas mantles and old camera lenses. Long half-life means low immediate radiation — but long-term exposure causes cancer."],
+ [91,'Pa','Protactinium',2,5,10,"Radioactive AND highly toxic chemically. One of the least studied elements because handling it is so dangerous. Handled with extreme caution in labs."],
+ [92,'U','Uranium',2,6,10,"URANIUM. Radioactive AND a heavy metal poison that destroys your kidneys. Double threat. Found in depleted uranium ammunition. Please do not lick this."],
+ [93,'Np','Neptunium',2,7,10,"Neptunium. Radioactive. Barely studied. Handled only behind lead shielding. First transuranium element discovered. Also the first 'why would you even ask' element."],
+ [94,'Pu','Plutonium',2,8,10,"PLUTONIUM. Microgram quantities can cause cancer. Warm to the touch from its own radioactive decay. The most toxic substance humans have created. No."],
+ [95,'Am','Americium',2,9,10,"Americium is literally in your smoke detector. It's radioactive. The quantity is tiny — but licking a pure sample? Catastrophic cellular damage."],
+ [96,'Cm','Curium',2,10,10,"Named after Marie and Pierre Curie, who would be appalled. Intensely radioactive — generates heat from its own decay. Would burn and irradiate simultaneously."],
+ [97,'Bk','Berkelium',2,11,10,"Named after Berkeley, California. Radioactive. So rare it's made atom by atom. You will never find enough to lick. Theoretical death is still death."],
+ [98,'Cf','Californium',2,12,10,"Californium-252 is such an intense neutron source it's used to start nuclear reactors. A lick would be a self-administered neutron irradiation event."],
+ [99,'Es','Einsteinium',2,13,10,"Named after Einstein. Only micrograms have ever been made. Half-life: 20 days. Cannot be licked in practice. Radioactive in theory. Einstein would not approve."],
+ [100,'Fm','Fermium',2,14,10,"Named after Fermi. First synthesised in the hydrogen bomb fallout. Available in nanogram quantities. Radioactive. Post-nuclear licking is still not recommended."],
+ [101,'Md','Mendelevium',2,15,10,"Named after Mendeleev, who invented the periodic table. He invented this table. You want to lick his element. He would have thoughts about that."],
+ [102,'No','Nobelium',2,16,10,"Named after Alfred Nobel, inventor of dynamite. An explosive namesake for a radioactive element you cannot lick. The irony is perfect."],
+ [103,'Lr','Lawrencium',2,17,10,"Named after Ernest Lawrence, inventor of the cyclotron. Last actinide. Radioactive. Half-life: 11 hours. Cyclotrons do not produce lickable quantities."],
+];
+
+const CATS = [
+  {cls:'g', label:'✓ YES — LICK IT', emoji:'✓'},
+  {cls:'y', label:'⚠ I WOULDN\'T', emoji:'⚠'},
+  {cls:'r', label:'☠ YOU\'RE DEAD', emoji:'☠'},
+];
+
+const grid = document.getElementById('ptgrid');
+const tip = document.getElementById('tooltip');
+let hideTimer = null;
+
+// Render spacer row 8
+const spacer = document.createElement('div');
+spacer.style.cssText = 'grid-column:1/19;grid-row:8;height:20px';
+grid.appendChild(spacer);
+
+// Labels for lanthanides and actinides rows
+function makeLabel(text, row) {
+  const d = document.createElement('div');
+  d.style.cssText = `grid-column:1/3;grid-row:${row};display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.18);`;
+  d.textContent = text;
+  grid.appendChild(d);
+}
+makeLabel('Lanthanides', 9);
+makeLabel('Actinides', 10);
+
+// Render elements
+ELEMENTS.forEach(([n, sym, name, cat, col, row, txt]) => {
+  const d = document.createElement('div');
+  d.className = `el ${CATS[cat].cls}`;
+  d.style.cssText = `--gc:${col};--gr:${row}`;
+  d.innerHTML = `<span class="el-num">${n}</span><span class="el-sym">${sym}</span><span class="el-name">${name}</span>`;
+
+  function show() {
+    clearTimeout(hideTimer);
+    tip.className = CATS[cat].cls + ' show';
+    document.getElementById('tt-sym').textContent = sym;
+    document.getElementById('tt-name').textContent = name;
+    document.getElementById('tt-num').textContent = `Element #${n} · Atomic Number ${n}`;
+    document.getElementById('tt-verdict').textContent = CATS[cat].label;
+    document.getElementById('tt-text').textContent = txt;
+  }
+  function hide() {
+    hideTimer = setTimeout(() => {
+      tip.classList.remove('show');
+    }, 300);
+  }
+
+  d.addEventListener('mouseenter', show);
+  d.addEventListener('mouseleave', hide);
+  d.addEventListener('click', (e) => { e.stopPropagation(); show(); });
+  grid.appendChild(d);
+});
+
+document.addEventListener('click', () => {
+  clearTimeout(hideTimer);
+  tip.classList.remove('show');
+});
+</script>
+</body>
+</html>
